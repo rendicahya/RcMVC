@@ -49,6 +49,41 @@ import org.pushingpixels.substance.api.skin.SubstanceTwilightLookAndFeel;
 public abstract class View<C extends Controller> extends JFrame {
 
     protected C controller;
+    private final HashMap<String, LookAndFeel> lafs = new HashMap<>();
+
+    {
+        lafs.put("Nimbus", new NimbusLookAndFeel());
+        lafs.put("Windows", new WindowsLookAndFeel());
+        lafs.put("Windows Classic", new WindowsClassicLookAndFeel());
+        lafs.put("Info Node", new InfoNodeLookAndFeel());
+        lafs.put("Autumn", new SubstanceAutumnLookAndFeel());
+        lafs.put("Business Black Steel", new SubstanceBusinessBlackSteelLookAndFeel());
+        lafs.put("Business Blue Steel", new SubstanceBusinessBlueSteelLookAndFeel());
+        lafs.put("Business", new SubstanceBusinessLookAndFeel());
+        lafs.put("Challenger Deep", new SubstanceChallengerDeepLookAndFeel());
+        lafs.put("Creme", new SubstanceCremeLookAndFeel());
+        lafs.put("Creme Coffee", new SubstanceCremeCoffeeLookAndFeel());
+        lafs.put("Dust", new SubstanceDustLookAndFeel());
+        lafs.put("Dust Coffee", new SubstanceDustCoffeeLookAndFeel());
+        lafs.put("Emerald Dusk", new SubstanceEmeraldDuskLookAndFeel());
+        lafs.put("Gemini", new SubstanceGeminiLookAndFeel());
+        lafs.put("Graphite", new SubstanceGraphiteLookAndFeel());
+        lafs.put("Graphite Aqua", new SubstanceGraphiteAquaLookAndFeel());
+        lafs.put("Graphite Glass", new SubstanceGraphiteGlassLookAndFeel());
+        lafs.put("Magellan", new SubstanceMagellanLookAndFeel());
+        lafs.put("Mariner", new SubstanceMarinerLookAndFeel());
+        lafs.put("Mist Aqua", new SubstanceMistAquaLookAndFeel());
+        lafs.put("Mist Silver", new SubstanceMistSilverLookAndFeel());
+        lafs.put("Moderate", new SubstanceModerateLookAndFeel());
+        lafs.put("Nebula", new SubstanceNebulaLookAndFeel());
+        lafs.put("Nebula Brick Wall", new SubstanceNebulaBrickWallLookAndFeel());
+        lafs.put("Office Black 2007", new SubstanceOfficeBlack2007LookAndFeel());
+        lafs.put("Office Blue 2007", new SubstanceOfficeBlue2007LookAndFeel());
+        lafs.put("Office Silver 2007", new SubstanceOfficeSilver2007LookAndFeel());
+        lafs.put("Raven", new SubstanceRavenLookAndFeel());
+        lafs.put("Sahara", new SubstanceSaharaLookAndFeel());
+        lafs.put("Twilight", new SubstanceTwilightLookAndFeel());
+    }
 
     protected View(final C controller) {
         this.controller = controller;
@@ -73,6 +108,9 @@ public abstract class View<C extends Controller> extends JFrame {
         }.execute();
     }
 
+    /**
+     * Should be called after initComponents()
+     */
     protected void centerFrame() {
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((dim.width - getSize().width) / 2, (dim.height - getSize().height) / 2 - 10);
@@ -89,7 +127,7 @@ public abstract class View<C extends Controller> extends JFrame {
      */
     protected void setLaf(String lafName) {
         try {
-            UIManager.setLookAndFeel(new LookAndFeels().get(lafName));
+            UIManager.setLookAndFeel(lafs.get(lafName));
             SwingUtilities.updateComponentTreeUI(this);
         } catch (UnsupportedLookAndFeelException e) {
         }
@@ -112,42 +150,5 @@ public abstract class View<C extends Controller> extends JFrame {
 
     public String prompt(String message) {
         return showInputDialog(getContentPane(), message, getTitle(), QUESTION_MESSAGE);
-    }
-
-    private class LookAndFeels extends HashMap<String, LookAndFeel> {
-
-        public LookAndFeels() {
-            put("Nimbus", new NimbusLookAndFeel());
-            put("Windows", new WindowsLookAndFeel());
-            put("Windows Classic", new WindowsClassicLookAndFeel());
-            put("Info Node", new InfoNodeLookAndFeel());
-            put("Autumn", new SubstanceAutumnLookAndFeel());
-            put("Business Black Steel", new SubstanceBusinessBlackSteelLookAndFeel());
-            put("Business Blue Steel", new SubstanceBusinessBlueSteelLookAndFeel());
-            put("Business", new SubstanceBusinessLookAndFeel());
-            put("Challenger Deep", new SubstanceChallengerDeepLookAndFeel());
-            put("Creme", new SubstanceCremeLookAndFeel());
-            put("Creme Coffee", new SubstanceCremeCoffeeLookAndFeel());
-            put("Dust", new SubstanceDustLookAndFeel());
-            put("Dust Coffee", new SubstanceDustCoffeeLookAndFeel());
-            put("Emerald Dusk", new SubstanceEmeraldDuskLookAndFeel());
-            put("Gemini", new SubstanceGeminiLookAndFeel());
-            put("Graphite", new SubstanceGraphiteLookAndFeel());
-            put("Graphite Aqua", new SubstanceGraphiteAquaLookAndFeel());
-            put("Graphite Glass", new SubstanceGraphiteGlassLookAndFeel());
-            put("Magellan", new SubstanceMagellanLookAndFeel());
-            put("Mariner", new SubstanceMarinerLookAndFeel());
-            put("Mist Aqua", new SubstanceMistAquaLookAndFeel());
-            put("Mist Silver", new SubstanceMistSilverLookAndFeel());
-            put("Moderate", new SubstanceModerateLookAndFeel());
-            put("Nebula", new SubstanceNebulaLookAndFeel());
-            put("Nebula Brick Wall", new SubstanceNebulaBrickWallLookAndFeel());
-            put("Office Black 2007", new SubstanceOfficeBlack2007LookAndFeel());
-            put("Office Blue 2007", new SubstanceOfficeBlue2007LookAndFeel());
-            put("Office Silver 2007", new SubstanceOfficeSilver2007LookAndFeel());
-            put("Raven", new SubstanceRavenLookAndFeel());
-            put("Sahara", new SubstanceSaharaLookAndFeel());
-            put("Twilight", new SubstanceTwilightLookAndFeel());
-        }
     }
 }
